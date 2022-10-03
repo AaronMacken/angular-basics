@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app2" ng-cloak>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Two views from the same controller, just using different scope variables -->
+    <h4 ng-controller="ctrl1">First random number: {{randomNum1}}</h4>
+    <h4 ng-controller="ctrl1">Second random number: {{randomNum2}}</h4>
+
+    <h4 ng-controller="badCtrl" data-ng-bind="bad"></h4>
+    <h4 ng-controller="badCtrl">
+        expression version: {{ bad }}
+    </h4>
+
+    <div ng-controller="groceriesCtrl">
+        <h3>Grociries List {{groceries.length}}</h3>
+
+        <ol>
+            <li>{{groceries[0].name}}</li>
+        </ol>
+
+        <!-- ng repeat for mapping through like a `for in` loop -->
+        <!-- ng-if: render if the enclosed boolean is true | no need to return null :) -->
+        <!-- $index is built into the ng-repeat api -->
+        <!-- Its an array helper, you also have $first, $last, $middle (booleans) -->
+        <!-- $even $odd -->
+        <ul start="1" ng-repeat="grocerie in groceries" ng-if="$index > 0">
+            <li>{{grocerie.name + ' ' + grocerie.price}}</li>
+        </ul>
+    </div>
+
+    <div ng-controller="partialController">
+        <h3>Inputs that can modify state</h3>
+        <p>{{randomVariable}}</p>
+        <!-- ng-model only works on certain input types -->
+        <!-- you can update other scope variables in real time with it -->
+        <input ng-model="randomVariable"></input>
+
+        <h3>HTML Partials</h3>
+        <!-- this ng model looks at a boolean variable -->
+        <input type="checkbox" ng-model="isPartialTrue">
+
+        <!-- it updates that same boolean variable in this function, which then returns a partial html file -->
+        <ng-include src="getPartialFile()"></ng-include>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js" integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/exam2.js"></script>
+</body>
+</html>
